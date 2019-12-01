@@ -1,0 +1,6 @@
+{{ object.cname }}
+{{ object.pname }}
+{{ object.user.username }}
+{{ object.slug }}
+{{ object.description }}
+{{ object.meta_description }}
