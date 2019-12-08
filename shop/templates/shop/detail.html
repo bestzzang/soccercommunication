@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Product Detail{% endblock %}
+{% block content %}
+
+    <div class="col">
+        <div class="alert alert-info text-primary" role="alert">Detail : {{ product.author.username }}</div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <img src="{{product.image.url}}" width="100%">
+                </div>
+                <div class="col">
+                    <h1 class="display-6">{{product.cname}}</h1>
+                    <p class="card-text">{{product.pname}}</p>
+                    <h7><span class="badge badge-secondary">Description</span>{{product.description|linebreaks }}</h7>
+                    <p class="card-text">Product Info Link <a href="{{ product.related_url }}" target="_blank"><ins> {{product.pname}}</ins></a></p>
+
+                    {% if product.author.username == user.username %}
+                    <a href="{% url 'shop:product_update' pk=product.id product_slug=product.slug %}" class="btn btn-outline-primary btn-xs mr-1 mt-1 float-left">Update</a>
+                    <a href="{% url 'shop:product_delete' pk=product.id product_slug=product.slug %}" class="btn btn-outline-danger btn-xs mr-1 mt-1 float-left">Delete</a>
+                    {% endif %}
+
+                    {% if product.author.username != user.username %}
+                    <a href="mailto:jangym0426@naver.com?bcc=zzang@logippl.com" class="btn btn-warning text-danger btn-xs mr-1 mt-1 float-left">Inquiry by e-mail</a>
+                    {% endif %}
+                    <a href="/" class="btn btn-info btn-xs mt-1 float-left">Continue shopping</a>
+
+                </div>
+            </div>
+
+        </div>
+        <p></p>
+
+    <div class="col">
+        <div class="alert alert-info" role="alert">Products from the same Communication</div>
+
+
+        <div class="container">
+            {% for prdt in product_list %}
+                {% if product.category == prdt.category %}
+                    {% if product.pname != prdt.pname %}
+                        <a href="{{prdt.get_absolute_url}}" class="btn btn-outline-warning mt-1 text-success ">{{ prdt }}</a><br>
+                    {% endif %}
+                {% endif %}
+
+            {% endfor %}
+        </div>
+
+
+
+
+
+
+{% endblock %}

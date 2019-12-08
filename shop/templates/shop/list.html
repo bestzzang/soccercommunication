@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Category Page{% endblock %}
+{% block content %}
+
+
+
+    <div class="row">
+        <div class="col-2">
+            <div class="list-group">
+                <a href="/" class="list-group-item {% if not current_category %}active{% endif %}">All</a>
+                {% for c in categories %}
+                    <a href="{{c.get_absolute_url}}" class="list-group-item {% if current_category.slug == c.slug %}active{% endif %}">{{c.name}}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+
+
+            <div class="col">
+                <div class="alert alert-info" role="alert">
+                    {% if current_category %}{{current_category.name}}{% else %}All Products{% endif %}
+                </div>
+ <!--               <div class="card-columns">  -->
+
+                    <div class="row">
+                    {% for product in products %}
+
+                        <div class="col-4">
+                            <div class="card">
+                              <img class="card-img-top" src="{{product.image.url}}" alt="Product Image" >
+                              <div class="card-body">
+<!--                                {% if product.author.username != user.username %}
+                               <button type="button" class="btn btn-xs btn-outline-warning text-secondary " disabled>{{product.author.username}}</button>
+                                {% endif %}
+                                 {% if product.author.username == user.username %}
+                               <button type="button" class="btn btn-xs btn-info" disabled>{{product.author.username}}</button>
+                                 {% endif %}   -->
+                               <h4 class="card-title mt-1">{{product.pname}}</h4>
+                                  <h5 class="card-subtitle mb-2 text-muted">{{product.cname}}</h5>
+                                  <p class="card-text"><small>{{product.description|slice:":30"}} ...</small></p>
+                                  <h4 class="text-warning"><em><strong>{{product.category.name}}</strong></em></h4>
+
+                                 {% if product.author.username == user.username %}
+                               <a href="{% url 'shop:product_update' pk=product.id product_slug=product.slug %}" class="btn btn-outline-success btn-xs mr-1 mt-1 float-left">Update</a>
+                               <a href="{% url 'shop:product_delete' pk=product.id product_slug=product.slug %}" class="btn btn-outline-danger btn-xs mr-1 mt-1 float-left">Delete</a>
+                                 {% endif %}
+
+                               <a href="{{product.get_absolute_url}}" class="btn btn-primary mt-1">View Detail</a>
+                              </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+                    </div>
+ <!--               </div>  -->
+            </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Product Detail{% endblock %}
+{% block content %}
+
+
+    <div class="col">
+        <div class="alert alert-info" role="alert">My Prodeucts</div>
+
+
+        <div class="container">
+            {% for product in products %}
+            <div class="row">
+
+                {% if product.author.username == user.username %}
+                <div class="col-4">
+                    <img src="{{product.image.url}}" width="auto" height="250">
+                </div>
+                <div class="col">
+                    <h1 class="display-6">{{product.pname}}</h1>
+                    <h5><span class="badge badge-secondary">Description</span>{{product.description|linebreaks}}</h5>
+                    <a href="{% url 'shop:product_update' pk=product.id product_slug=product.slug %}" class="btn btn-outline-primary btn-xs mt-1 mr-1float-left">Update</a>
+                    <a href="{% url 'shop:product_delete' pk=product.id product_slug=product.slug %}" class="btn btn-outline-danger btn-xs mt-1 mr-1float-left">Delete</a>
+                    <a href="/" class="btn btn-info mt-1 mr-1 float-left">Continue shopping</a>
+                </div>
+
+                {% endif %}
+            </div>
+            <p></p>
+
+            {% endfor %}
+
+        </div>
+
+
+
+{% endblock %}
