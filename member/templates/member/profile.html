@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}- Profile{% endblock %}
+
+{% block content %}
+<div class="col">
+        <div class="alert alert-info text-primary " role="alert">
+            <h2>{{user.username}}'s profile</h2>
+        </div>
+
+
+
+    <div class="col">
+        <h5> USER : {{profile_user.username}} <br>
+            {% if profile_user.first_name is not None %}
+            NAME : {{profile_user.first_name}} {{profile_user.last_name}} <br>
+            PHONE : {{profile_user.phone}}<br>
+            EMAIL : {{profile_user.email}}<br>
+            {% endif %}
+        </h5>
+        <p></p>
+        {% if user == profile_user %}   <!-- 로그인한 사용자와 profile_user(프로필 소유자)가 일치할 때만 프로필 편집이 가능하도록 함 -->
+        <a href="{% url 'member:profile_update' %}">
+            <button type="button" class="btn btn-default mt-1 ">프로필 편집</button></a>
+        <a href="{% url 'member:change_pw' %}">
+            <button type="button" class="btn btn-default mt-1 ">비밀번호 변경</button><a>
+        <a href="{% url 'member:profile_delete' %}">
+            <button type="button" class="btn btn-default mt-1 ">회원 탈퇴</button></a>
+        {% endif %}
+        <a href="/"><button type="button" class="btn btn-info mt-1 btn-xs">Continue shopping</button></a>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -10,9 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import os
-
-import dj_database_url
+import os, json
+from django.core.exceptions import ImproperlyConfigured
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -25,7 +24,20 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2c1^im=)a(*qnqng+6p_r(i+4r5dxcmyp55sety5c-ba4c$(b4'
+secret_file = os.path.join(BASE_DIR, 'secrets.json') # secrets.json 파일 위치를 명시
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -55,7 +67,10 @@ INSTALLED_APPS = [
 #    'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
     'storages',
+    'member.apps.MemberConfig',
 ]
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'member.forms.SignupForm' # <- 아래에서 기술할 회원가입 폼을 사용
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,7 +80,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -99,7 +113,6 @@ DATABASES = {
     }
 }
 
-DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
 
 
 # Password validation
@@ -144,7 +157,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -183,14 +195,6 @@ EMAIL_HOST_PASSWORD = 'sccrlgppl0426'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-AWS_ACCESS_KEY_ID = 'AKIA4HIKXVQFS4ACNQVS'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_REGION = 'ap-northeast-2'
-AWS_STORAGE_BUCKET_NAME = 'soccercommunication'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME,AWS_REGION)
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
 
 
 DEFAULT_FILE_STORAGE = 'config.asset_storage.MediaStorage'

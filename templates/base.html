@@ -10,6 +10,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
+    <style>
+     .title h1,
+    .title h3 {
+      display: inline;
+    }
+    </style>
+
 
     {% block script %}
     {% endblock %}
@@ -23,10 +30,12 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/"><h1>사커통신</h1></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <div class="title">
+        <a class="navbar-brand" href="/"><h1 class="text-primary">SOCCER</h1><h3 class="text-muted"> Communication</h3></a>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
 
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
@@ -34,8 +43,8 @@
         <li class="nav-item">
             <li class="nav-item"><a href="/" class="active nav-link ">Home</a></li>
             {% if user.is_authenticated %}
-            <li class="nav-item"><a href="#" class="nav-link" >Welcome, {{user.get_username}}</a></li>
             <li class="nav-item"><a href="{% url 'shop:search' %}" class="nav-link">Search</a></li>
+            <li class="nav-item"><a href="{% url 'member:profile' user.pk %}" class="nav-link" >Welcome, {{user.get_username}}</a></li>
             <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
             {% else %}
             <a class="nav-link" href="{% url 'account_login' %}">Login(Sign Up)</a>

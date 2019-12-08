@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}- Change Password{% endblock %}
+
+{% block content %}
+
+<div class="col">
+        <div class="alert alert-info text-primary " role="alert">
+            <h1>{{user.username}}'s Change the Password</h1>
+        </div>
+    <form method="POST" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="변경">
+    </form>
+
+</div>
+{% endblock %}

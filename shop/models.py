@@ -26,7 +26,7 @@ class Product(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_products')
 
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='products')
-    cname = models.CharField('Company', max_length=200, db_index=True)
+    cname = models.CharField('Series', max_length=200, db_index=True)
     pname = models.CharField('Products', max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True, unique=True, allow_unicode=True,
                             help_text='모델명, 제조사, 키워드 등을 조합하여 띄어 쓰기(공란) 없이 입력합니다. (공란은 "_"를 이용)')
