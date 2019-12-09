@@ -14,6 +14,7 @@ import os
 import json
 from django.core.exceptions import ImproperlyConfigured
 
+
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -26,6 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY ='+++'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -54,7 +56,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 #    'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.twitter',
-    'storages',
     'member.apps.MemberConfig',
 ]
 
@@ -179,7 +180,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'logipplsendmail@gmail.com'
-EMAIL_HOST_PASSWORD = 'sccrlgppl0426'
+EMAIL_HOST_PASSWORD = '+++'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
