@@ -11,9 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import json
-from django.core.exceptions import ImproperlyConfigured
-
 
 from django.utils.translation import ugettext_lazy as _
 
