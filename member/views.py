@@ -65,7 +65,7 @@ class ProfileView(DetailView):
 def profile_delete(request):
     if request.method == 'POST':
         request.user.delete()
-        return render(request, 'member/profile_del_done.html')
+        return redirect('/')
     return render(request, 'member/profile_delete.html')
 
 
