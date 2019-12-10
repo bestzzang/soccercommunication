@@ -183,7 +183,7 @@ EMAIL_USE_SSL = False
 
 
 
-DEFAULT_FILE_STORAGE = 'config.asset_storage.MediaStorage'
+
 
 MEDIA_URL = '/media/'
 
